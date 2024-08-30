@@ -1,0 +1,101 @@
+<div
+  *ngIf="isDropdownOpen"
+  class="absolute mt-2 w-2/6 max-w-xs bg-white dark:bg-darkBlue shadow-lg rounded-xl p-6 z-20 space-y-3 top-[160px] md:top-[160px] lg:top-[105px]"
+>
+  <div class="flex items-center space-x-2">
+    <input
+      type="checkbox"
+      id="draft"
+      [(ngModel)]="status.draft"
+      (change)="onStatusChange()"
+      class="w-6 h-6 border border-primary rounded bg-lightGray dark:bg-dark peer appearance-none checked:bg-primary dark:checked:bg-primary checked:border-transparent checked:after:content-['✓'] checked:after:text-white checked:after:text-lg checked:after:flex checked:after:items-center checked:after:justify-center"
+    />
+    <label
+      for="draft"
+      class="text-sm md:text-base text-dark dark:text-white font-bold font-spartan"
+    >
+      Draft
+    </label>
+  </div>
+  <div class="flex items-center space-x-2">
+    <input
+      type="checkbox"
+      id="paid"
+      [(ngModel)]="status.paid"
+      (change)="onStatusChange()"
+      class="w-6 h-6 border border-primary rounded bg-lightGray dark:bg-dark peer appearance-none checked:bg-primary dark:checked:bg-primary checked:border-transparent checked:after:content-['✓'] checked:after:text-white checked:after:text-lg checked:after:flex checked:after:items-center checked:after:justify-center"
+    />
+    <label
+      for="paid"
+      class="text-sm md:text-base text-dark dark:text-white font-bold font-spartan"
+    >
+      Paid
+    </label>
+  </div>
+  <div class="flex items-center space-x-2">
+    <input
+      type="checkbox"
+      id="pending"
+      [(ngModel)]="status.pending"
+      (change)="onStatusChange()"
+      class="w-6 h-6 border border-primary rounded bg-lightGray dark:bg-dark peer appearance-none checked:bg-primary dark:checked:bg-primary checked:border-transparent checked:after:content-['✓'] checked:after:text-white checked:after:text-lg checked:after:flex checked:after:items-center checked:after:justify-center"
+    />
+    <label
+      for="pending"
+      class="text-sm md:text-base text-dark dark:text-white font-bold font-spartan"
+    >
+      Pending
+    </label>
+  </div>
+</div>
+
+<!-- <div
+  *ngIf="isDropdownOpen"
+  class="absolute mt-2 w-2/6 max-w-xs bg-white dark:bg-darkBlue shadow-lg rounded-xl p-6 z-20 space-y-3 top-[165px] md:top-[155px]"
+>
+  <div class="flex items-center space-x-2">
+    <input
+      type="checkbox"
+      id="draft"
+      [(ngModel)]="status.draft"
+      (change)="onStatusChange()"
+      class="w-5 h-5 border border-primary rounded bg-lightGray dark:bg-dark peer appearance-none checked:bg-primary dark:checked:bg-primary checked:border-transparent"
+    />
+    <label
+      for="draft"
+      class="text-xs sm:text-sm md:text-base text-dark dark:text-white font-bold font-spartan"
+    >
+      Draft
+    </label>
+  </div>
+  <div class="flex items-center space-x-2">
+    <input
+      type="checkbox"
+      id="paid"
+      [(ngModel)]="status.paid"
+      (change)="onStatusChange()"
+      class="w-5 h-5 border border-primary rounded bg-lightGray dark:bg-dark peer appearance-none checked:bg-primary dark:checked:bg-primary checked:border-transparent"
+    />
+    <label
+      for="paid"
+      class="text-xs sm:text-sm md:text-base text-dark dark:text-white font-bold font-spartan"
+    >
+      Paid
+    </label>
+  </div>
+  <div class="flex items-center space-x-2">
+    <input
+      type="checkbox"
+      id="pending"
+      [(ngModel)]="status.pending"
+      (change)="onStatusChange()"
+      class="w-5 h-5 border border-primary rounded bg-lightGray dark:bg-dark peer appearance-none checked:bg-primary dark:checked:bg-primary checked:border-transparent"
+    />
+    <label
+      for="pending"
+      class="text-xs sm:text-sm md:text-base text-dark dark:text-white font-bold font-spartan"
+    >
+      Pending
+    </label>
+  </div>
+</div> -->

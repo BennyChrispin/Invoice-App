@@ -1,0 +1,41 @@
+<header
+  class="bg-navyBlue w-full h-20 fixed top-0 left-0 rounded-r-none flex flex-row justify-between items-center md:w-full md:h-20 md:rounded-r-none lg:min-h-screen lg:w-20 lg:h-auto lg:rounded-r-2xl lg:flex-col z-10"
+>
+  <!-- Logo for Mobile/iPad Header -->
+  <div class="block lg:hidden">
+    <img src="assets/icons/Group 9.svg" alt="Logo" class="h-20 w-20" />
+  </div>
+
+  <!-- Logo for Desktop Sidebar -->
+  <div class="hidden lg:block">
+    <img src="assets/icons/Group 9.svg" alt="Logo" class="w-20 h-20" />
+  </div>
+
+  <div
+    class="flex flex-row items-center space-x-10 px-8 lg:flex-col lg:space-x-0 lg:space-y-8 py-10"
+  >
+    <button (click)="toggleDarkMode()" class="flex items-center">
+      <img
+        [src]="
+          isDarkMode
+            ? 'assets/icons/icon-sun.svg'
+            : 'assets/icons/icon-moon.svg'
+        "
+        alt="Toggle Mode"
+        class="h-6 w-6"
+      />
+    </button>
+
+    <!-- Line Divider for Mobile/iPad Header -->
+    <div class="w-px h-16 bg-gray lg:hidden"></div>
+
+    <!-- Line Divider for Desktop Sidebar -->
+    <div class="hidden lg:block w-16 h-px bg-gray"></div>
+
+    <img
+      src="assets/icons/image-avatar.jpg"
+      alt="Profile Image"
+      class="h-12 w-12 rounded-full object-cover"
+    />
+  </div>
+</header>

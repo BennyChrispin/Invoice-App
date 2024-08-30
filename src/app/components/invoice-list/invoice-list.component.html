@@ -1,0 +1,185 @@
+<!-- Invoice List Container -->
+<div
+  [ngClass]="{ 'invoice-list-blur': isFormOpen }"
+  class="mt-28 mx-auto md:mt-28 lg:mt-14 max-w-screen-lg"
+>
+  <!-- Invoice List Header -->
+  <div class="flex items-center justify-between mx-8 md:mx-8 lg:mx-auto">
+    <div>
+      <h1
+        class="text-base md:text-2xl font-bold text-dark dark:text-white font-spartan"
+      >
+        Invoices
+      </h1>
+      <p class="text-xs md:text-sm text-gray dark:text-lightGray font-spartan">
+        <span class="hidden md:inline"> There are </span>
+        {{
+          invoices.length > 0
+            ? invoices.length + " total invoices"
+            : "There are no invoices available"
+        }}
+      </p>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <app-filter-dropdown
+        [isDropdownOpen]="isDropdownOpen"
+        (statusChange)="onStatusChange($event)"
+      ></app-filter-dropdown>
+      <button class="flex items-center space-x-2" (click)="toggleDropdown()">
+        <p
+          class="text-xs md:text-sm font-medium text-dark dark:text-white flex items-center justify-center gap-1"
+        >
+          Filter <span class="hidden md:block"> by status</span>
+        </p>
+        <img [src]="arrowIcon" alt="Arrow Icon" />
+      </button>
+      <button
+        (click)="openInvoiceForm()"
+        class="flex items-center bg-primary text-white font-bold p-2 rounded-full"
+      >
+        <div
+          class="p-2 rounded-full flex items-center justify-center bg-lightBg"
+        >
+          <img
+            src="assets/icons/icon-plus.svg"
+            alt="Filter Icon"
+            class="w-4 h-4"
+          />
+        </div>
+        <p
+          class="px-2 md:px-4 text-sm md:text-base flex items-center justify-center gap-1"
+        >
+          New <span class="hidden md:block">Invoice</span>
+        </p>
+      </button>
+    </div>
+  </div>
+
+  <!-- Invoice List -->
+  <div class="mt-8 mx-auto max-w-screen-lg mb-10 min-h-screen">
+    <div
+      *ngIf="filteredInvoices.length > 0; else noInvoices"
+      class="max-w-screen-lg mx-8 md:mx-8 lg:mx-auto"
+    >
+      <button
+        *ngFor="let invoice of filteredInvoices"
+        class="grid grid-cols-2 md:grid-cols-6 items-center justify-between mb-4 p-6 rounded-lg shadow dark:bg-darkBlue bg-lightBg w-full hover:border hover:border-primary duration-300 transition-none ease-linear"
+        (click)="viewInvoiceDetails(invoice.id)"
+      >
+        <p class="text-base font-bold dark:text-lightBg">
+          <span class="font-bold text-gray">#</span>{{ invoice.id }}
+        </p>
+        <p class="text-sm font-extralight dark:text-lightGray block md:hidden">
+          {{ invoice.clientName }}
+        </p>
+        <p class="text-gray font-light text-sm dark:text-lightBg">
+          Due {{ invoice.paymentDue | date : "d MMM y" }}
+        </p>
+
+        <p class="text-sm font-extralight dark:text-lightGray hidden md:block">
+          {{ invoice.clientName }}
+        </p>
+        <div class="block md:hidden mt-4">
+          <p
+            class="p-2 rounded-md font-bold flex items-center justify-center"
+            [ngClass]="{
+              'bg-[#F3FDFA] text-[#33D69F] dark:bg-[#1F2B3F]':
+                invoice.status === 'Paid',
+              'bg-[#FFF9F0] text-[#FF8F00] dark:bg-[#2B2736]':
+                invoice.status === 'Pending',
+              'bg-[#F4F4F5] text-dark dark:bg-[#292C44] dark:text-lightBg':
+                invoice.status === 'Draft'
+            }"
+          >
+            <span>
+              <svg
+                width="10"
+                height="10"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4"
+              >
+                <circle cx="6" cy="6" r="4" fill="currentColor" />
+              </svg>
+            </span>
+            <span>
+              {{ invoice.status }}
+            </span>
+          </p>
+        </div>
+        <h2 class="font-bold text-base dark:text-lightGray block md:hidden">
+          {{ invoice.total | currency }}
+        </h2>
+        <h2 class="font-bold text-base dark:text-lightGray hidden md:block">
+          {{ invoice.total | currency }}
+        </h2>
+
+        <div class="hidden md:block">
+          <p
+            class="p-2 rounded-md font-bold flex items-center justify-center"
+            [ngClass]="{
+              'bg-[#F3FDFA] text-[#33D69F] dark:bg-[#1F2B3F]':
+                invoice.status === 'Paid',
+              'bg-[#FFF9F0] text-[#FF8F00] dark:bg-[#2B2736]':
+                invoice.status === 'Pending',
+              'bg-[#F4F4F5] text-dark dark:bg-[#292C44] dark:text-lightBg':
+                invoice.status === 'Draft'
+            }"
+          >
+            <span>
+              <svg
+                width="10"
+                height="10"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4"
+              >
+                <circle cx="6" cy="6" r="4" fill="currentColor" />
+              </svg>
+            </span>
+            <span>
+              {{ invoice.status }}
+            </span>
+          </p>
+        </div>
+
+        <span class="ml-32 hidden md:block">
+          <img
+            src="/assets/icons/icon-arrow-right.svg"
+            alt="Invoice Status Icon"
+          />
+        </span>
+      </button>
+    </div>
+
+    <ng-template #noInvoices>
+      <div
+        class="flex items-center justify-center text-center bg-lightGray dark:bg-dark p-8 rounded-md"
+      >
+        <img
+          src="assets/icons/illustration-empty.svg"
+          alt="No Invoices Icon"
+          class="w-14 h-14"
+        />
+        <h1 class="mt-6 text-gray dark:text-lightGray font-bold text-lg">
+          There is nothing here
+        </h1>
+        <p
+          class="text-lightGray font-normal dark:text-lightGray mt-3 text-base"
+        >
+          Create an invoice by clicking the <br />
+          <button class="text-gray font-bold dark:text-lightBg">
+            New Invoice
+          </button>
+          button and get started
+        </p>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<!-- Modal Container -->
+<div *ngIf="isFormOpen" class="invoice-form-container show">
+  <div class="invoice-form">
+    <app-invoice-form></app-invoice-form>
+  </div>
+</div>

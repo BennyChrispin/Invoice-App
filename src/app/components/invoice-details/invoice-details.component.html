@@ -1,0 +1,257 @@
+<div class="mt-28 mx-auto md:mt-14 max-w-screen-lg">
+  <button
+    class="flex items-center space-x-4 text-primary hover:text-secondary transition mx-6"
+    (click)="goBack()"
+  >
+    <img src="assets/icons/icon-arrow-left.svg" alt="Icon Arrow Left" />
+    <span
+      class="hover:text-gray hover:dark:text-gray font-semibold dark:text-gray text-darkBlue duration-300 transition-all ease-in-out font-spartan"
+    >
+      Go back
+    </span>
+  </button>
+
+  <div *ngIf="invoice">
+    <div
+      class="mt-8 mx-4 bg-[#FFF] rounded-lg shadow dark:bg-darkBlue p-6 flex items-center justify-between md:justify-between md:flex-row"
+    >
+      <div class="flex items-center justify-between space-x-4 md:w-auto w-full">
+        <h2 class="text-base text-gray font-spartan">Status</h2>
+        <p
+          class="min-w-[125px] p-2 rounded-md font-bold flex items-center justify-center gap-2"
+          [ngClass]="{
+            'bg-[#F3FDFA] text-[#33D69F] dark:bg-[#1F2B3F]':
+              invoice.status === 'Paid',
+            'bg-[#FFF9F0] text-[#FF8F00] dark:bg-[#2B2736]':
+              invoice.status === 'Pending',
+            'bg-[#F4F4F5] text-dark dark:bg-[#292C44] dark:text-lightBg':
+              invoice.status === 'Draft'
+          }"
+        >
+          <span>
+            <svg
+              width="10"
+              height="10"
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+            >
+              <circle cx="6" cy="6" r="4" fill="currentColor" />
+            </svg>
+          </span>
+          <span class="font-spartan">
+            {{ invoice.status }}
+          </span>
+        </p>
+      </div>
+
+      <!-- Fixed Buttons on Mobile Screens -->
+      <div
+        class="fixed md:relative bottom-0 inset-x-0 p-4 flex items-center justify-center bg-white dark:bg-darkBlue shadow md:shadow-none md:mt-0 md:space-x-4 md:flex md:items-center md:justify-end md:p-0"
+      >
+        <div class="flex items-center space-x-4">
+          <button
+            class="p-3 px-6 rounded-full bg-lightGray dark:bg-[#252945] text-gray dark:text-lightBg font-bold font-spartan hover:bg-opacity-50 transition-all duration-300 ease-in-out"
+          >
+            Edit
+          </button>
+          <button
+            class="p-3 px-6 rounded-full bg-red text-lightBg font-bold font-spartan hover:bg-opacity-50 transition-all duration-300 ease-in-out"
+          >
+            Delete
+          </button>
+          <button
+            class="p-3 px-6 rounded-full bg-primary text-lightBg font-bold font-spartan hover:bg-opacity-50 transition-all duration-300 ease-in-out"
+          >
+            Mark as Paid
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="invoice"
+    class="mx-4 px-4 py-6 md:px-12 md:py-8 mt-8 bg-[#FFF] rounded-lg shadow dark:bg-darkBlue"
+  >
+    <!-- Invoice Details -->
+    <div
+      class="flex flex-col md:flex-row items-start md:items-center justify-between mx-6 md:mx-4"
+    >
+      <div>
+        <h1
+          class="text-lg md:text-xl font-bold text-dark dark:text-lightBg font-spartan"
+        >
+          <span class="font-bold text-gray">#</span>{{ invoice.id }}
+        </h1>
+        <p
+          class="font-medium text-gray dark:text-lightGray font-spartan text-sm"
+        >
+          {{ invoice.description }}
+        </p>
+      </div>
+      <div class="mt-4 md:mt-0">
+        <p
+          class="text-sm font-light text-gray dark:text-lightGray font-spartan"
+        >
+          {{ invoice.senderAddress.street }}
+        </p>
+        <p
+          class="text-sm font-light text-gray dark:text-lightGray font-spartan"
+        >
+          {{ invoice.senderAddress.city }}
+        </p>
+        <p
+          class="text-sm font-light text-gray dark:text-lightGray font-spartan"
+        >
+          {{ invoice.senderAddress.postCode }}
+        </p>
+        <p
+          class="text-sm font-light text-gray dark:text-lightGray font-spartan"
+        >
+          {{ invoice.senderAddress.country }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Responsive Layout for Invoice Data -->
+    <div class="mx-6 md:mx-4">
+      <!-- Parent Container -->
+      <div class="mt-10 grid grid-cols-2 md:grid-cols-3 gap-4">
+        <!-- Invoice Date -->
+        <div class="space-y-2">
+          <h1 class="font-light text-sm text-gray dark:text-lightGray">
+            Invoice Date
+          </h1>
+          <p class="font-semibold text-dark dark:text-lightGray text-base">
+            {{ invoice.createdAt | date : "d MMM y" }}
+          </p>
+        </div>
+        <!-- Bill To -->
+        <div class="space-y-2">
+          <h1 class="font-light text-sm text-gray dark:text-lightGray">
+            Bill To
+          </h1>
+          <p class="font-semibold text-dark dark:text-lightGray text-base">
+            {{ invoice.clientName }}
+          </p>
+        </div>
+        <!-- Sent to Mobile -->
+        <div class="space-y-2 order-last md:order-none hidden md:block">
+          <h1 class="font-light text-sm text-gray dark:text-lightGray">
+            Sent to
+          </h1>
+          <p class="font-semibold text-dark dark:text-lightGray text-base">
+            {{ invoice.clientEmail }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Second Grid -->
+      <div class="mt-1 grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="space-y-2">
+          <h1 class="font-light text-sm text-gray dark:text-lightGray">
+            Payment Due
+          </h1>
+          <p class="font-semibold text-dark dark:text-lightGray text-base">
+            {{ invoice.paymentDue | date : "d MMM y" }}
+          </p>
+        </div>
+        <div class="space-y-1">
+          <p class="font-light text-gray dark:text-lightGray text-sm">
+            {{ invoice.clientAddress.street }}
+          </p>
+          <p class="font-light text-gray dark:text-lightGray text-base">
+            {{ invoice.clientAddress.city }}
+          </p>
+          <p class="font-light text-gray dark:text-lightGray text-base">
+            {{ invoice.clientAddress.postCode }}
+          </p>
+          <p class="font-light text-gray dark:text-lightGray text-base">
+            {{ invoice.clientAddress.country }}
+          </p>
+        </div>
+      </div>
+      <div class="space-y-2 order-last md:order-none block md:hidden">
+        <h1 class="font-light text-sm text-gray dark:text-lightGray">
+          Sent to
+        </h1>
+        <p class="font-semibold text-dark dark:text-lightGray text-base">
+          {{ invoice.clientEmail }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Responsive Table -->
+    <div class="mt-8 rounded-xl bg-[#F9FAFE] dark:bg-[#252945] mb-24 md:mb-0">
+      <!-- Header -->
+      <div
+        class="hidden md:grid md:grid-cols-4 px-6 py-4 text-sm font-normal text-gray tracking-wider pt-6"
+      >
+        <div>Item Name</div>
+        <div>QTY</div>
+        <div>Price</div>
+        <div>Total</div>
+      </div>
+
+      <!-- Items -->
+      <div
+        *ngFor="let item of invoice.items"
+        class="grid md:grid-cols-4 w-full py-0 md:py-4"
+      >
+        <!-- Item Name -->
+        <div
+          class="px-6 text-sm font-semibold text-darkBlue dark:text-lightGray pt-6 md:pt-0"
+        >
+          {{ item.name }}
+          <!-- Mobile View -->
+          <div class="md:hidden text-gray dark:text-lightGray">
+            <div class="flex items-center justify-between">
+              <div class="flex space-x-2">
+                <span class="font-semibold">{{ item.quantity }}</span> x
+                <span>{{ item.price | currency }}</span>
+              </div>
+              <span class="text-base text-dark dark:text-lightGray">{{
+                item.price | currency
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quantity (Visible on larger screens) -->
+        <div
+          class="hidden md:block px-6 text-sm text-gray font-semibold dark:text-lightGray"
+        >
+          {{ item.quantity }}
+        </div>
+
+        <!-- Price (Visible on larger screens) -->
+        <div
+          class="hidden md:block px-6 text-sm text-gray font-semibold dark:text-lightGray"
+        >
+          {{ item.price | currency }}
+        </div>
+
+        <!-- Total (Visible on larger screens) -->
+        <div
+          class="hidden md:block px-6 text-sm text-gray font-semibold dark:text-lightGray"
+        >
+          {{ item.total | currency }}
+        </div>
+      </div>
+
+      <!-- Amount Due -->
+      <div
+        class="grid grid-cols-2 md:grid-cols-4 bg-darkBg text-lightGray mt-8 rounded-b-xl"
+      >
+        <div
+          class="px-8 py-6 text-base font-semibold dark:text-lightGray md:col-span-3"
+        >
+          Amount Due
+        </div>
+        <div class="px-6 py-8 text-base font-semibold dark:text-lightGray">
+          {{ invoice.total | currency }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

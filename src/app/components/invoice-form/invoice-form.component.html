@@ -1,0 +1,191 @@
+<div
+  class="invoice-form-container mt-32 md:mt-28 lg:mt-auto min-h-screen overflow-y-auto"
+>
+  <form
+    [formGroup]="invoiceForm"
+    class="invoice-form bg-[#FFF] dark:bg-darkBg p-6 rounded-r-2xl shadow-lg font-spartan px-14 w-full"
+  >
+    <h2 class="text-xl font-bold dark:text-lightGray text-dark font-spartan">
+      New Invoice
+    </h2>
+
+    <!-- Bill From -->
+    <div class="mt-14">
+      <h2
+        class="font-spartan font-semibold text-sm text-primary dark:text-primary"
+      >
+        Bill From
+      </h2>
+      <div class="flex-col items-center space-y-2 mt-4">
+        <label class="block text-base font-light text-gray font-spartan"
+          >Street Address</label
+        >
+        <input
+          formControlName="streetAddress"
+          type="text"
+          class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+        />
+      </div>
+      <div class="flex items-center justify-between mt-4 gap-6">
+        <div class="flex-col items-center space-y-2 w-full">
+          <label class="block text-base font-light text-gray font-spartan"
+            >City</label
+          >
+          <input
+            formControlName="city"
+            type="text"
+            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          />
+        </div>
+        <div class="flex-col items-center space-y-2 w-full">
+          <label class="block text-base font-light text-gray font-spartan"
+            >Post Code</label
+          >
+          <input
+            formControlName="postCode"
+            type="text"
+            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          />
+        </div>
+        <div class="flex-col items-center space-y-2 w-full">
+          <label class="block text-base font-light text-gray font-spartan"
+            >Country</label
+          >
+          <input
+            formControlName="country"
+            type="text"
+            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          />
+        </div>
+      </div>
+      <!-- Bill To -->
+      <h2
+        class="font-spartan font-semibold text-sm text-primary dark:text-primary mt-14"
+      >
+        Bill To
+      </h2>
+      <div class="flex-col items-center space-y-2 mt-4">
+        <label class="block text-base font-light text-gray font-spartan"
+          >Client's Name</label
+        >
+        <input
+          formControlName="clientName"
+          type="text"
+          class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+        />
+      </div>
+      <div class="flex-col items-center space-y-2 mt-4">
+        <label class="block text-base font-light text-gray font-spartan"
+          >Client's Email</label
+        >
+        <input
+          formControlName="clientEmail"
+          type="text"
+          class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+        />
+      </div>
+      <div class="flex-col items-center space-y-2 mt-4">
+        <label class="block text-base font-light text-gray font-spartan"
+          >Street Address</label
+        >
+        <input
+          formControlName="streetAddress"
+          type="text"
+          class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+        />
+      </div>
+      <div class="flex items-center justify-between mt-4 gap-6">
+        <div class="flex-col items-center space-y-2 w-full">
+          <label class="block text-base font-light text-gray font-spartan"
+            >City</label
+          >
+          <input
+            formControlName="city"
+            type="text"
+            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          />
+        </div>
+        <div class="flex-col items-center space-y-2 w-full">
+          <label class="block text-base font-light text-gray font-spartan"
+            >Post Code</label
+          >
+          <input
+            formControlName="postCode"
+            type="text"
+            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          />
+        </div>
+        <div class="flex-col items-center space-y-2 w-full">
+          <label class="block text-base font-light text-gray font-spartan"
+            >Country</label
+          >
+          <input
+            formControlName="country"
+            type="text"
+            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          />
+        </div>
+      </div>
+      <div class="flex flex-row items-center justify-between mt-4 gap-6">
+        <div class="flex-col items-center space-y-2 w-full">
+          <label class="block text-base font-light text-gray font-spartan"
+            >Invoice Date</label
+          >
+          <input
+            formControlName="invoiceDate"
+            type="date"
+            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          />
+        </div>
+
+        <div class="flex-col items-center space-y-2 w-full">
+          <label class="block text-base font-light text-gray font-spartan"
+            >Payment Terms</label
+          >
+          <input
+            formControlName="paymentTerms"
+            type="text"
+            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          />
+        </div>
+      </div>
+      <div class="flex-col items-center space-y-2 mt-6">
+        <label class="block text-base font-light text-gray font-spartan"
+          >Project Description</label
+        >
+        <input
+          formControlName="projectDescription"
+          type="text"
+          class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+        />
+      </div>
+    </div>
+
+    <!-- Submit and Cancel Buttons -->
+    <div class="flex items-center justify-between mt-14">
+      <button
+        class="p-3 px-6 bg-lightBg text-gray dark:bg-lightGray rounded-full font-semibold"
+        type="button"
+        (click)="closeForm()"
+      >
+        Discard
+      </button>
+      <div class="flex items-center space-x-4">
+        <button
+          class="bg-darkBlue dark:bg-gray text-gray dark:text-lightGray py-3 px-6 rounded-full font-semibold"
+          (click)="onSubmit(true)"
+          type="button"
+        >
+          Save as Draft
+        </button>
+        <button
+          class="bg-primary text-lightGray py-3 px-6 rounded-full font-semibold"
+          (click)="onSubmit(false)"
+          type="submit"
+        >
+          Save & Send
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
