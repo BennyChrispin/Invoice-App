@@ -13,7 +13,6 @@ export class InvoiceService {
 
   constructor(private http: HttpClient) {
     this.http.get<Invoice[]>(this.dataUrl).subscribe((data) => {
-      // console.log('Fetched invoices:', data);
       this.invoicesSubject.next(data);
     });
   }
@@ -28,6 +27,20 @@ export class InvoiceService {
     this.invoicesSubject.next(updatedInvoices);
     return new Observable<Invoice>((observer) => {
       observer.next(newInvoice);
+      observer.complete();
+    });
+  }
+
+  // Implement deleteInvoice method
+  deleteInvoice(id: string): Observable<void> {
+    const currentInvoices = this.invoicesSubject.getValue();
+    const updatedInvoices = currentInvoices.filter(
+      (invoice: { id: string }) => invoice.id !== id
+    );
+    this.invoicesSubject.next(updatedInvoices);
+
+    return new Observable<void>((observer) => {
+      observer.next();
       observer.complete();
     });
   }

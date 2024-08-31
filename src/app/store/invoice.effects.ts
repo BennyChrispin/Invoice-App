@@ -4,11 +4,12 @@ import * as InvoiceActions from './invoice.action';
 import { InvoiceService } from '../core/service/invoice.service';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { Invoice } from '../core/models/invoice.model';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class InvoiceEffects {
   private actions$ = inject(Actions);
-  constructor(private invoiceService: InvoiceService) {}
+  constructor(private invoiceService: InvoiceService, private store: Store) {}
 
   loadInvoices$ = createEffect(() =>
     this.actions$.pipe(
@@ -36,6 +37,20 @@ export class InvoiceEffects {
           ),
           catchError((error) =>
             of(InvoiceActions.addInvoiceFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
+
+  deleteInvoice$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(InvoiceActions.deleteInvoice),
+      mergeMap((action) =>
+        this.invoiceService.deleteInvoice(action.id).pipe(
+          map(() => InvoiceActions.deleteInvoiceSuccess({ id: action.id })),
+          catchError((error) =>
+            of(InvoiceActions.deleteInvoiceFailure({ error }))
           )
         )
       )

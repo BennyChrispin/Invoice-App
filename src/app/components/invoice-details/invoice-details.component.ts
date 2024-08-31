@@ -33,6 +33,12 @@ export class InvoiceDetailsComponent implements OnInit {
     });
   }
 
+  deleteInvoice(id: string): void {
+    if (confirm('Are you sure you want to delete this invoice?')) {
+      this.store.dispatch(InvoiceActions.deleteInvoice({ id }));
+    }
+  }
+
   goBack() {
     this.location.back();
   }

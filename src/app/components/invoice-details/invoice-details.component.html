@@ -44,27 +44,21 @@
         </p>
       </div>
 
-      <!-- Fixed Buttons on Mobile Screens -->
       <div
         class="fixed md:relative bottom-0 inset-x-0 p-4 flex items-center justify-center bg-white dark:bg-darkBlue shadow md:shadow-none md:mt-0 md:space-x-4 md:flex md:items-center md:justify-end md:p-0"
       >
         <div class="flex items-center space-x-4">
-          <!-- Show Edit button for all statuses -->
           <button
             class="p-3 px-6 rounded-full bg-lightGray dark:bg-[#252945] text-gray dark:text-lightBg font-bold font-spartan hover:bg-opacity-50 transition-all duration-300 ease-in-out"
           >
             Edit
           </button>
-
-          <!-- Show Delete button if status is not Draft -->
           <button
-            *ngIf="invoice.status !== 'Draft'"
+            (click)="deleteInvoice(invoice.id)"
             class="p-3 px-6 rounded-full bg-red text-lightBg font-bold font-spartan hover:bg-opacity-50 transition-all duration-300 ease-in-out"
           >
             Delete
           </button>
-
-          <!-- Show Mark as Paid button if status is Pending -->
           <button
             *ngIf="invoice.status === 'Pending'"
             class="p-3 px-6 rounded-full bg-primary text-lightBg font-bold font-spartan hover:bg-opacity-50 transition-all duration-300 ease-in-out"

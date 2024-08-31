@@ -50,6 +50,12 @@ export const invoiceReducer = createReducer(
     invoices: state.invoices.filter((i) => i.id !== id),
     error: null,
   })),
+
+  on(InvoiceActions.deleteInvoice, (state, { id }) => ({
+    ...state,
+    invoices: state.invoices.filter((invoice) => invoice.id !== id),
+  })),
+
   on(InvoiceActions.deleteInvoiceFailure, (state, { error }) => ({
     ...state,
     error,
