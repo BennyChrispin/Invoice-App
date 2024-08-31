@@ -5,6 +5,7 @@ import { Invoice } from '../../core/models/invoice.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { v4 as uuidv4 } from 'uuid';
+
 @Component({
   selector: 'app-invoice-form',
   templateUrl: './invoice-form.component.html',
@@ -35,9 +36,9 @@ export class InvoiceFormComponent implements OnInit {
         postCode: ['', Validators.required],
         country: ['', Validators.required],
       }),
-      invoiceDate: ['', Validators.required],
-      paymentTerms: [this.selectedOption],
-      projectDescription: ['', Validators.required],
+      paymentDue: ['', Validators.required],
+      paymentTerms: [this.selectedOption, Validators.required],
+      description: ['', Validators.required],
       items: this.fb.array([this.createItem()]),
     });
   }
@@ -58,8 +59,8 @@ export class InvoiceFormComponent implements OnInit {
 
   createItem(): FormGroup {
     return this.fb.group({
-      itemName: ['', Validators.required],
-      qty: [1, [Validators.required, Validators.min(1)]],
+      name: ['', Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]],
       price: [0, [Validators.required, Validators.min(0)]],
       total: [{ value: 0, disabled: true }],
     });
@@ -94,28 +95,38 @@ export class InvoiceFormComponent implements OnInit {
   }
 
   generateInvoiceId(): string {
-    const prefix = 'BE';
+    const prefix = 'RT';
     const uuidPart = uuidv4().split('-')[0];
-    const minLength = 4;
-    const paddedUuidPart =
-      uuidPart.length < minLength ? uuidPart.padEnd(minLength, '0') : uuidPart;
+    const shortenedUuidPart = uuidPart.substring(0, 4);
 
-    return `${prefix}-${paddedUuidPart}`;
+    return `${prefix}-${shortenedUuidPart}`;
   }
 
   saveAsDraft(): void {
-    console.log('Saving as draft:', this.invoiceForm.getRawValue());
+    const draftInvoice: Invoice = {
+      ...this.invoiceForm.getRawValue(),
+      id: this.generateInvoiceId(),
+      status: 'Draft',
+      createdAt: new Date(),
+    };
+    console.log('Saving as draft:', draftInvoice);
+    this.store.dispatch(InvoiceActions.addInvoice({ invoice: draftInvoice }));
   }
+
   saveAndSend(): void {
     if (this.invoiceForm.valid) {
       const newInvoice: Invoice = {
-        ...this.invoiceForm.value,
+        ...this.invoiceForm.getRawValue(),
         id: this.generateInvoiceId(),
+        status: 'Pending',
+        createdAt: new Date(),
       };
       this.store.dispatch(InvoiceActions.addInvoice({ invoice: newInvoice }));
+      console.log('Saving and sending:', newInvoice);
+      this.invoiceForm.reset();
+    } else {
+      this.invoiceForm.markAllAsTouched();
     }
-
-    console.log('Saving and sending:', this.invoiceForm.getRawValue());
   }
 
   closeModal() {

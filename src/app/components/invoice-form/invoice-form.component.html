@@ -253,18 +253,18 @@
             >Invoice Date</label
           >
           <input
-            formControlName="invoiceDate"
+            formControlName="paymentDue"
             type="date"
             class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
           />
           <div
             *ngIf="
-              invoiceForm.get('invoiceDate')?.invalid &&
-              invoiceForm.get('invoiceDate')?.touched
+              invoiceForm.get('paymentDue')?.invalid &&
+              invoiceForm.get('paymentDue')?.touched
             "
             class="text-red text-xs"
           >
-            {{ getErrorMessage("invoiceDate") }}
+            {{ getErrorMessage("paymentDue") }}
           </div>
         </div>
 
@@ -275,7 +275,7 @@
 
           <div class="relative w-full">
             <div
-              class="custom-select block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-lg p-3 bg-lightBg dark:bg-darkBlue text-dark dark:text-lightGray cursor-pointer text-sm"
+              class="custom-select block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-lg p-4 bg-lightBg dark:bg-darkBlue text-dark dark:text-lightGray cursor-pointer text-sm"
               (click)="toggleDropdown()"
             >
               {{ selectedOption }}
@@ -312,18 +312,18 @@
           >Project Description</label
         >
         <input
-          formControlName="projectDescription"
+          formControlName="description"
           type="text"
           class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
         />
         <div
           *ngIf="
-            invoiceForm.get('projectDescription')?.invalid &&
-            invoiceForm.get('projectDescription')?.touched
+            invoiceForm.get('description')?.invalid &&
+            invoiceForm.get('description')?.touched
           "
           class="text-red text-xs"
         >
-          {{ getErrorMessage("projectDescription") }}
+          {{ getErrorMessage("description") }}
         </div>
       </div>
 
@@ -343,7 +343,7 @@
             <div
               class="text-center dark:text-lightGray focus:outline-none focus:border focus:border-primary text-gray font-light"
             >
-              Qty
+              Qty.
             </div>
             <div
               class="text-center dark:text-lightGray focus:outline-none focus:border focus:border-primary text-gray font-light"
@@ -374,33 +374,33 @@
               class="font-semibold text-dark dark:text-lightGray focus:outline-none focus:border focus:border-primary border w-full rounded-md border-lightGray p-4"
             >
               <input
-                formControlName="itemName"
+                formControlName="name"
                 type="text"
                 class="border-none outline-none w-full bg-transparent"
               />
               <div
-                *ngIf="
-                  item.get('itemName')?.invalid && item.get('itemName')?.touched
-                "
+                *ngIf="item.get('name')?.invalid && item.get('name')?.touched"
                 class="text-red text-xs"
               >
-                {{ getErrorMessage("itemName") }}
+                {{ getErrorMessage("name") }}
               </div>
             </div>
             <div
               class="font-semibold text-dark dark:text-lightGray focus:outline-none focus:border focus:border-primary border w-full rounded-md border-lightGray p-4"
             >
               <input
-                formControlName="qty"
+                formControlName="quantity"
                 type="number"
                 class="border-none outline-none w-full bg-transparent"
                 min="1"
               />
               <div
-                *ngIf="item.get('qty')?.invalid && item.get('qty')?.touched"
+                *ngIf="
+                  item.get('quantity')?.invalid && item.get('quantity')?.touched
+                "
                 class="text-red text-xs"
               >
-                {{ getErrorMessage("qty") }}
+                {{ getErrorMessage("quantity") }}
               </div>
             </div>
             <div
@@ -420,10 +420,10 @@
               </div>
             </div>
             <div
-              class="font-semibold text-dark dark:text-lightGray focus:outline-none focus:border focus:border-primary border w-full rounded-md border-gray p-4"
+              class="font-semibold text-dark dark:text-lightGray focus:outline-none focus:border focus:border-primary border w-full rounded-md border-gray dark:border-lightGray p-4"
             >
               {{
-                item.get("qty")?.value * item.get("price")?.value
+                item.get("quantity")?.value * item.get("price")?.value
                   | number : "1.2-2"
               }}
             </div>
@@ -438,7 +438,7 @@
 
           <button
             (click)="addItem()"
-            class="mt-6 w-full rounded-full bg-lightGray dark:bg-darkBlue text-base font-semibold text-gray dark:text-lightGray gap-2 p-4"
+            class="mt-6 w-full rounded-full bg-lightGray dark:bg-darkBlue text-base font-semibold text-gray dark:text-lightGray gap-2 p-4 hover:bg-opacity-50 dark:hover:bg-opacity-50 duration-300 transition-all ease-out"
             type="button"
           >
             Add New Item
@@ -447,7 +447,7 @@
       </div>
 
       <!-- Submit and Cancel Buttons -->
-      <div class="flex items-center justify-between mt-14 px-14">
+      <div class="flex items-center justify-between mt-14">
         <button
           class="p-3 px-6 bg-lightBg text-gray dark:bg-lightGray rounded-full font-semibold"
           type="button"
