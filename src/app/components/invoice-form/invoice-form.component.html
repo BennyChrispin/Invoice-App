@@ -1,16 +1,16 @@
-<div
-  class="invoice-form-container mt-32 md:mt-28 lg:mt-auto min-h-screen overflow-y-auto"
->
+<div class="invoice-form-container mt-32 md:mt-28 lg:mt-auto">
   <form
     [formGroup]="invoiceForm"
-    class="invoice-form bg-[#FFF] dark:bg-darkBg p-6 rounded-r-2xl shadow-lg font-spartan px-14 w-full"
+    class="invoice-form bg-[#FFF] dark:bg-darkBg p-6 rounded-r-2xl shadow-lg font-spartan relative"
   >
-    <h2 class="text-xl font-bold dark:text-lightGray text-dark font-spartan">
+    <h2
+      class="text-xl font-bold dark:text-lightGray text-dark font-spartan px-14"
+    >
       New Invoice
     </h2>
 
     <!-- Bill From -->
-    <div class="mt-14">
+    <div class="mt-14 px-14">
       <h2
         class="font-spartan font-semibold text-sm text-primary dark:text-primary"
       >
@@ -39,7 +39,7 @@
         </div>
         <div class="flex-col items-center space-y-2 w-full">
           <label class="block text-base font-light text-gray font-spartan"
-            >Post Code</label
+            >PostCode</label
           >
           <input
             formControlName="postCode"
@@ -73,6 +73,9 @@
           type="text"
           class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
         />
+        <div *ngIf="getErrorMessage('clientName')" class="text-red-500 text-sm">
+          {{ getErrorMessage("clientName") }}
+        </div>
       </div>
       <div class="flex-col items-center space-y-2 mt-4">
         <label class="block text-base font-light text-gray font-spartan"
@@ -107,7 +110,7 @@
         </div>
         <div class="flex-col items-center space-y-2 w-full">
           <label class="block text-base font-light text-gray font-spartan"
-            >Post Code</label
+            >PostCode</label
           >
           <input
             formControlName="postCode"
@@ -127,16 +130,12 @@
         </div>
       </div>
       <div class="flex flex-row items-center justify-between mt-4 gap-6">
-        <div class="flex-col items-center space-y-2 w-full">
-          <label class="block text-base font-light text-gray font-spartan"
-            >Invoice Date</label
-          >
-          <input
-            formControlName="invoiceDate"
-            type="date"
-            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
-          />
-        </div>
+        <input
+          formControlName="invoiceDate"
+          type="date"
+          class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          value="2024-08-30"
+        />
 
         <div class="flex-col items-center space-y-2 w-full">
           <label class="block text-base font-light text-gray font-spartan"
@@ -159,10 +158,100 @@
           class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
         />
       </div>
+      <!-- Item List -->
+      <div class="mt-8">
+        <h2 class="text-gray text-lg font-semibold">Item List</h2>
+        <div class="grid-container mt-2">
+          <!-- Grid Header -->
+          <div
+            class="py-4 grid-header grid grid-cols-5 gap-4 pb-4 dark:border-darkGray text-sm font-semibold text-dark dark:text-lightGray"
+          >
+            <div class="text-gray dark:text-lightGray font-light">
+              Item Name
+            </div>
+            <div class="text-center dark:text-lightGray text-gray font-light">
+              Qty
+            </div>
+            <div class="text-center dark:text-lightGray text-gray font-light">
+              Price
+            </div>
+            <div class="text-center dark:text-lightGray text-gray font-light">
+              Total
+            </div>
+            <div class="text-center dark:text-lightGray text-gray font-light">
+              Delete
+            </div>
+          </div>
+
+          <!-- Grid Items -->
+          <div
+            formArrayName="items"
+            *ngFor="
+              let item of items.controls;
+              let i = index;
+              trackBy: trackByFn
+            "
+          >
+            <div
+              [formGroupName]="i"
+              class="py-2 grid-item grid grid-cols-5 gap-4 dark:border-darkGray text-sm text-dark dark:text-lightGray w-full"
+            >
+              <div
+                class="font-semibold text-dark dark:text-lightGray border w-full rounded-md border-lightGray p-4"
+              >
+                <input
+                  formControlName="itemName"
+                  type="text"
+                  class="border-none outline-none w-full bg-transparent"
+                />
+              </div>
+              <div
+                class="font-semibold text-dark dark:text-lightGray border w-full rounded-md border-lightGray p-4"
+              >
+                <input
+                  formControlName="qty"
+                  type="number"
+                  class="border-none outline-none w-full bg-transparent"
+                />
+              </div>
+              <div
+                class="font-semibold text-dark dark:text-lightGray border w-full rounded-md border-lightGray p-4"
+              >
+                <input
+                  formControlName="price"
+                  type="number"
+                  class="border-none outline-none w-full bg-transparent"
+                />
+              </div>
+              <div
+                class="font-semibold text-dark dark:text-lightGray border w-full rounded-md border-lightGray p-4"
+              >
+                {{
+                  item.get("qty")?.value * item.get("price")?.value
+                    | number : "1.2-2"
+                }}
+              </div>
+              <button
+                type="button"
+                (click)="removeItem(i)"
+                class="font-semibold text-dark dark:text-lightGray p-4 w-full flex items-center justify-center"
+              >
+                <img src="/assets/icons/icon-delete.svg" alt="Delete Icon" />
+              </button>
+            </div>
+          </div>
+          <button
+            (click)="addItem()"
+            class="mt-6 w-full rounded-full bg-lightGray dark:bg-darkBlue text-base font-semibold text-gray dark:text-lightGray gap-2 p-4"
+          >
+            Add New Item
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Submit and Cancel Buttons -->
-    <div class="flex items-center justify-between mt-14">
+    <div class="flex items-center justify-between mt-14 px-14">
       <button
         class="p-3 px-6 bg-lightBg text-gray dark:bg-lightGray rounded-full font-semibold"
         type="button"
@@ -173,14 +262,12 @@
       <div class="flex items-center space-x-4">
         <button
           class="bg-darkBlue dark:bg-gray text-gray dark:text-lightGray py-3 px-6 rounded-full font-semibold"
-          (click)="onSubmit(true)"
-          type="button"
+          type="submit"
         >
           Save as Draft
         </button>
         <button
           class="bg-primary text-lightGray py-3 px-6 rounded-full font-semibold"
-          (click)="onSubmit(false)"
           type="submit"
         >
           Save & Send
