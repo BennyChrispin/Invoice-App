@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { Invoice } from '../core/models/invoice.model';
 
 export const loadInvoices = createAction('[Invoice List] Load Invoices');
 
@@ -18,12 +19,14 @@ export const loadInvoicesFailure = createAction(
 
 export const addInvoice = createAction(
   '[Invoice List] Add Invoice',
-  props<{ invoice: any }>()
+  props<{ invoice: Invoice }>()
 );
+
 export const addInvoiceSuccess = createAction(
   '[Invoice List] Add Invoice Success',
-  props<{ invoice: any }>()
+  props<{ invoice: Invoice }>()
 );
+
 export const addInvoiceFailure = createAction(
   '[Invoice List] Add Invoice Failure',
   props<{ error: any }>()
@@ -54,7 +57,3 @@ export const deleteInvoiceFailure = createAction(
   '[Invoice List] Delete Invoice Failure',
   props<{ error: any }>()
 );
-export function loadInvoiceSuccess(loadInvoiceSuccess: any, arg1: (state: import("./invoice.reducer").InvoiceState, { invoice }: any) => { invoices: any[]; error: null; }): import("@ngrx/store").ReducerTypes<import("./invoice.reducer").InvoiceState, readonly import("@ngrx/store").ActionCreator[]> {
-  throw new Error('Function not implemented.');
-}
-

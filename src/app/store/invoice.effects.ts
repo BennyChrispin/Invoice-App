@@ -1,47 +1,44 @@
-import { Injectable } from '@angular/core';
-import { Actions } from '@ngrx/effects';
+import { inject, Injectable } from '@angular/core';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 import * as InvoiceActions from './invoice.action';
 import { InvoiceService } from '../core/service/invoice.service';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { catchError, map, mergeMap, of } from 'rxjs';
 import { Invoice } from '../core/models/invoice.model';
 
 @Injectable()
 export class InvoiceEffects {
-  private loadInvoicesSubscription: Subscription | null = null;
+  private actions$ = inject(Actions);
+  constructor(private invoiceService: InvoiceService) {}
 
-  constructor(
-    private actions$: Actions,
-    private invoiceService: InvoiceService,
-    private store: Store
-  ) {
-    this.initializeLoadInvoicesEffect();
-  }
+  loadInvoices$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(InvoiceActions.loadInvoices),
+      mergeMap(() =>
+        this.invoiceService.getInvoices().pipe(
+          map((invoices: Invoice[]) =>
+            InvoiceActions.loadInvoicesSuccess({ invoices })
+          ),
+          catchError((error) =>
+            of(InvoiceActions.loadInvoicesFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
 
-  private initializeLoadInvoicesEffect() {
-    this.actions$.subscribe((action) => {
-      if (action.type === InvoiceActions.loadInvoices.type) {
-        this.loadInvoices();
-      }
-    });
-  }
-
-  private loadInvoices() {
-    if (this.loadInvoicesSubscription) {
-      this.loadInvoicesSubscription.unsubscribe();
-    }
-
-    this.loadInvoicesSubscription = this.invoiceService
-      .getInvoices()
-      .subscribe({
-        next: (invoices: Invoice[]) => {
-          this.store.dispatch(InvoiceActions.loadInvoicesSuccess({ invoices }));
-        },
-        error: (error: any) => {
-          this.store.dispatch(
-            InvoiceActions.loadInvoicesFailure({ error: error.message })
-          );
-        },
-      });
-  }
+  addInvoice$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(InvoiceActions.addInvoice),
+      mergeMap((action) =>
+        this.invoiceService.addInvoice(action.invoice).pipe(
+          map((invoice: Invoice) =>
+            InvoiceActions.addInvoiceSuccess({ invoice })
+          ),
+          catchError((error) =>
+            of(InvoiceActions.addInvoiceFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
 }

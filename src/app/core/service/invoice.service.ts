@@ -13,12 +13,22 @@ export class InvoiceService {
 
   constructor(private http: HttpClient) {
     this.http.get<Invoice[]>(this.dataUrl).subscribe((data) => {
+      // console.log('Fetched invoices:', data);
       this.invoicesSubject.next(data);
     });
   }
 
-  // Method to return invoices observable
   getInvoices(): Observable<Invoice[]> {
     return this.invoices$;
+  }
+
+  addInvoice(newInvoice: Invoice): Observable<Invoice> {
+    const currentInvoices = this.invoicesSubject.getValue();
+    const updatedInvoices = [...currentInvoices, newInvoice];
+    this.invoicesSubject.next(updatedInvoices);
+    return new Observable<Invoice>((observer) => {
+      observer.next(newInvoice);
+      observer.complete();
+    });
   }
 }

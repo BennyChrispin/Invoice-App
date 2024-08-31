@@ -23,7 +23,6 @@ export const invoiceReducer = createReducer(
     invoices,
     error: null,
   })),
-
   on(InvoiceActions.loadInvoicesFailure, (state, { error }) => ({
     ...state,
     error,

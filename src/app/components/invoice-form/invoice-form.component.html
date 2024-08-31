@@ -1,41 +1,73 @@
-<div class="invoice-form-container mt-32 md:mt-28 lg:mt-auto">
-  <form
-    [formGroup]="invoiceForm"
+<form
+  [formGroup]="invoiceForm"
+  class="invoice-form-container mt-32 md:mt-28 lg:mt-auto"
+>
+  <div
     class="invoice-form bg-[#FFF] dark:bg-darkBg p-6 rounded-r-2xl shadow-lg font-spartan relative"
   >
+    <!-- Close Button -->
+    <button
+      type="button"
+      class="absolute top-6 right-6 text-gray dark:text-lightGray hover:text-primary dark:hover:text-primary transition duration-300 ease-in-out"
+      (click)="closeModal()"
+    >
+      &#10005;
+    </button>
     <h2
       class="text-xl font-bold dark:text-lightGray text-dark font-spartan px-14"
     >
       New Invoice
     </h2>
 
-    <!-- Bill From -->
-    <div class="mt-14 px-14">
+    <!-- Sender Address (Bill From) -->
+    <div class="mt-14 px-14" formGroupName="senderAddress">
       <h2
         class="font-spartan font-semibold text-sm text-primary dark:text-primary"
       >
         Bill From
       </h2>
       <div class="flex-col items-center space-y-2 mt-4">
-        <label class="block text-base font-light text-gray font-spartan"
+        <label
+          for="streetAddress"
+          class="block text-base font-light text-gray font-spartan"
           >Street Address</label
         >
         <input
           formControlName="streetAddress"
           type="text"
-          class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
         />
+        <div
+          *ngIf="
+            invoiceForm.get('clientName')?.invalid &&
+            invoiceForm.get('clientName')?.touched
+          "
+          class="text-red text-xs"
+        >
+          {{ getErrorMessage("clientName") }}
+        </div>
       </div>
       <div class="flex items-center justify-between mt-4 gap-6">
         <div class="flex-col items-center space-y-2 w-full">
-          <label class="block text-base font-light text-gray font-spartan"
+          <label
+            for="city"
+            class="block text-base font-light text-gray font-spartan"
             >City</label
           >
           <input
             formControlName="city"
             type="text"
-            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+            class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
           />
+          <div
+            *ngIf="
+              invoiceForm.get('clientName')?.invalid &&
+              invoiceForm.get('clientName')?.touched
+            "
+            class="text-red text-xs"
+          >
+            {{ getErrorMessage("clientName") }}
+          </div>
         </div>
         <div class="flex-col items-center space-y-2 w-full">
           <label class="block text-base font-light text-gray font-spartan"
@@ -44,8 +76,17 @@
           <input
             formControlName="postCode"
             type="text"
-            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+            class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
           />
+          <div
+            *ngIf="
+              invoiceForm.get('clientName')?.invalid &&
+              invoiceForm.get('clientName')?.touched
+            "
+            class="text-red text-xs"
+          >
+            {{ getErrorMessage("clientName") }}
+          </div>
         </div>
         <div class="flex-col items-center space-y-2 w-full">
           <label class="block text-base font-light text-gray font-spartan"
@@ -54,16 +95,30 @@
           <input
             formControlName="country"
             type="text"
-            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+            class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
           />
+          <div
+            *ngIf="
+              invoiceForm.get('clientName')?.invalid &&
+              invoiceForm.get('clientName')?.touched
+            "
+            class="text-red text-xs"
+          >
+            {{ getErrorMessage("clientName") }}
+          </div>
         </div>
       </div>
-      <!-- Bill To -->
+    </div>
+
+    <!-- Bill To -->
+    <div class="mt-14 px-14">
       <h2
-        class="font-spartan font-semibold text-sm text-primary dark:text-primary mt-14"
+        class="font-spartan font-semibold text-sm text-primary dark:text-primary"
       >
         Bill To
       </h2>
+
+      <!-- Client's Name -->
       <div class="flex-col items-center space-y-2 mt-4">
         <label class="block text-base font-light text-gray font-spartan"
           >Client's Name</label
@@ -71,33 +126,68 @@
         <input
           formControlName="clientName"
           type="text"
-          class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
         />
-        <div *ngIf="getErrorMessage('clientName')" class="text-red-500 text-sm">
+        <div
+          *ngIf="
+            invoiceForm.get('clientName')?.invalid &&
+            invoiceForm.get('clientName')?.touched
+          "
+          class="text-red text-xs"
+        >
           {{ getErrorMessage("clientName") }}
         </div>
       </div>
+
+      <!-- Client's Email -->
       <div class="flex-col items-center space-y-2 mt-4">
         <label class="block text-base font-light text-gray font-spartan"
           >Client's Email</label
         >
         <input
           formControlName="clientEmail"
-          type="text"
-          class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          type="email"
+          class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
         />
+        <div
+          *ngIf="
+            invoiceForm.get('clientEmail')?.invalid &&
+            invoiceForm.get('clientEmail')?.touched
+          "
+          class="text-red text-xs"
+        >
+          {{ getErrorMessage("clientEmail") }}
+        </div>
       </div>
-      <div class="flex-col items-center space-y-2 mt-4">
+
+      <!-- Client Address -->
+      <div
+        class="flex-col items-center space-y-2 mt-4"
+        formGroupName="clientAddress"
+      >
         <label class="block text-base font-light text-gray font-spartan"
           >Street Address</label
         >
         <input
           formControlName="streetAddress"
           type="text"
-          class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
         />
+        <div
+          *ngIf="
+            invoiceForm.get('clientAddress.streetAddress')?.invalid &&
+            invoiceForm.get('clientAddress.streetAddress')?.touched
+          "
+          class="text-red text-xs"
+        >
+          {{ getErrorMessage("clientAddress.streetAddress") }}
+        </div>
       </div>
-      <div class="flex items-center justify-between mt-4 gap-6">
+
+      <div
+        class="flex items-center justify-between mt-4 gap-6"
+        formGroupName="clientAddress"
+      >
         <div class="flex-col items-center space-y-2 w-full">
           <label class="block text-base font-light text-gray font-spartan"
             >City</label
@@ -105,8 +195,17 @@
           <input
             formControlName="city"
             type="text"
-            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+            class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
           />
+          <div
+            *ngIf="
+              invoiceForm.get('clientAddress.city')?.invalid &&
+              invoiceForm.get('clientAddress.city')?.touched
+            "
+            class="text-red text-xs"
+          >
+            {{ getErrorMessage("clientAddress.city") }}
+          </div>
         </div>
         <div class="flex-col items-center space-y-2 w-full">
           <label class="block text-base font-light text-gray font-spartan"
@@ -115,8 +214,17 @@
           <input
             formControlName="postCode"
             type="text"
-            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+            class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
           />
+          <div
+            *ngIf="
+              invoiceForm.get('clientAddress.postCode')?.invalid &&
+              invoiceForm.get('clientAddress.postCode')?.touched
+            "
+            class="text-red text-xs"
+          >
+            {{ getErrorMessage("clientAddress.postCode") }}
+          </div>
         </div>
         <div class="flex-col items-center space-y-2 w-full">
           <label class="block text-base font-light text-gray font-spartan"
@@ -125,34 +233,81 @@
           <input
             formControlName="country"
             type="text"
-            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+            class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
           />
+          <div
+            *ngIf="
+              invoiceForm.get('clientAddress.country')?.invalid &&
+              invoiceForm.get('clientAddress.country')?.touched
+            "
+            class="text-red text-xs"
+          >
+            {{ getErrorMessage("clientAddress.country") }}
+          </div>
         </div>
       </div>
+
+      <!-- Invoice Date and Payment Terms -->
       <div class="flex flex-row items-center justify-between mt-4 gap-6">
         <div class="flex-col items-center space-y-2 w-full">
           <label class="block text-base font-light text-gray font-spartan"
-            >Date Issues</label
+            >Invoice Date</label
           >
           <input
             formControlName="invoiceDate"
             type="date"
-            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
-            value="2024-08-30"
+            class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
           />
+          <div
+            *ngIf="
+              invoiceForm.get('invoiceDate')?.invalid &&
+              invoiceForm.get('invoiceDate')?.touched
+            "
+            class="text-red text-xs"
+          >
+            {{ getErrorMessage("invoiceDate") }}
+          </div>
         </div>
 
-        <div class="flex-col items-center space-y-2 w-full">
+        <div class="flex flex-col items-center space-y-2 w-full">
           <label class="block text-base font-light text-gray font-spartan"
             >Payment Terms</label
           >
-          <input
-            formControlName="paymentTerms"
-            type="text"
-            class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
-          />
+
+          <div class="relative w-full">
+            <div
+              class="custom-select block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-lg p-3 bg-lightBg dark:bg-darkBlue text-dark dark:text-lightGray cursor-pointer text-sm"
+              (click)="toggleDropdown()"
+            >
+              {{ selectedOption }}
+            </div>
+            <ul
+              class="dropdown-options absolute w-full border border-lightGray focus:outline-none focus:border focus:border-primary dark:border-darkBg bg-white dark:bg-darkBlue rounded-lg mt-1 shadow-lg z-10 overflow-hidden text-sm"
+              [class.hidden]="!dropdownOpen"
+            >
+              <li
+                *ngFor="let option of paymentOptions"
+                (click)="selectOption(option)"
+                class="p-4 text-dark dark:text-lightBg hover:text-primary dark:hover:text-primary duration-300 transition-all ease-in cursor-pointer border-b border-lightGray dark:border-dark overflow-hidden font-semibold text-sm"
+              >
+                {{ option }}
+              </li>
+            </ul>
+          </div>
+
+          <div
+            *ngIf="
+              invoiceForm.get('paymentTerms')?.invalid &&
+              invoiceForm.get('paymentTerms')?.touched
+            "
+            class="text-red-500 text-xs"
+          >
+            {{ getErrorMessage("paymentTerms") }}
+          </div>
         </div>
       </div>
+
+      <!-- Project Description -->
       <div class="flex-col items-center space-y-2 mt-6">
         <label class="block text-base font-light text-gray font-spartan"
           >Project Description</label
@@ -160,27 +315,45 @@
         <input
           formControlName="projectDescription"
           type="text"
-          class="block w-full border border-lightGray rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
+          class="block w-full border border-lightGray focus:outline-none focus:border focus:border-primary rounded-md p-3 bg-white dark:bg-darkBlue dark:border-none text-dark dark:text-lightGray"
         />
+        <div
+          *ngIf="
+            invoiceForm.get('projectDescription')?.invalid &&
+            invoiceForm.get('projectDescription')?.touched
+          "
+          class="text-red text-xs"
+        >
+          {{ getErrorMessage("projectDescription") }}
+        </div>
       </div>
+
       <!-- Item List -->
-      <div class="mt-8">
+      <div class="mt-8" formArrayName="items">
         <h2 class="text-gray text-lg font-semibold">Item List</h2>
         <div class="grid-container mt-4">
           <!-- Grid Header -->
           <div
             class="py-4 grid-header grid grid-cols-5 gap-4 pb-4 dark:border-darkGray text-sm font-semibold text-dark dark:text-lightGray"
           >
-            <div class="text-gray dark:text-lightGray font-light">
+            <div
+              class="text-gray dark:text-lightGray focus:outline-none focus:border focus:border-primary font-light"
+            >
               Item Name
             </div>
-            <div class="text-center dark:text-lightGray text-gray font-light">
+            <div
+              class="text-center dark:text-lightGray focus:outline-none focus:border focus:border-primary text-gray font-light"
+            >
               Qty
             </div>
-            <div class="text-center dark:text-lightGray text-gray font-light">
+            <div
+              class="text-center dark:text-lightGray focus:outline-none focus:border focus:border-primary text-gray font-light"
+            >
               Price
             </div>
-            <div class="text-center dark:text-lightGray text-gray font-light">
+            <div
+              class="text-center dark:text-lightGray focus:outline-none focus:border focus:border-primary text-gray font-light"
+            >
               Total
             </div>
             <div class="text-center dark:text-lightGray text-gray font-light">
@@ -190,94 +363,116 @@
 
           <!-- Grid Items -->
           <div
-            formArrayName="items"
             *ngFor="
               let item of items.controls;
               let i = index;
               trackBy: trackByFn
             "
+            [formGroupName]="i"
+            class="py-2 grid-item grid grid-cols-5 gap-4 dark:border-darkGray text-sm text-dark dark:text-lightGray w-full"
           >
             <div
-              [formGroupName]="i"
-              class="py-2 grid-item grid grid-cols-5 gap-4 dark:border-darkGray text-sm text-dark dark:text-lightGray w-full"
+              class="font-semibold text-dark dark:text-lightGray focus:outline-none focus:border focus:border-primary border w-full rounded-md border-lightGray p-4"
             >
+              <input
+                formControlName="itemName"
+                type="text"
+                class="border-none outline-none w-full bg-transparent"
+              />
               <div
-                class="font-semibold text-dark dark:text-lightGray border w-full rounded-md border-lightGray p-4"
+                *ngIf="
+                  item.get('itemName')?.invalid && item.get('itemName')?.touched
+                "
+                class="text-red text-xs"
               >
-                <input
-                  formControlName="itemName"
-                  type="text"
-                  class="border-none outline-none w-full bg-transparent"
-                />
+                {{ getErrorMessage("itemName") }}
               </div>
-              <div
-                class="font-semibold text-dark dark:text-lightGray border w-full rounded-md border-lightGray p-4"
-              >
-                <input
-                  formControlName="qty"
-                  type="number"
-                  class="border-none outline-none w-full bg-transparent"
-                />
-              </div>
-              <div
-                class="font-semibold text-dark dark:text-lightGray border w-full rounded-md border-lightGray p-4"
-              >
-                <input
-                  formControlName="price"
-                  type="number"
-                  class="border-none outline-none w-full bg-transparent"
-                />
-              </div>
-              <div
-                class="font-semibold text-dark dark:text-lightGray border w-full rounded-md border-lightGray p-4"
-              >
-                {{
-                  item.get("qty")?.value * item.get("price")?.value
-                    | number : "1.2-2"
-                }}
-              </div>
-              <button
-                type="button"
-                (click)="removeItem(i)"
-                class="font-semibold text-dark dark:text-lightGray p-4 w-full flex items-center justify-center"
-              >
-                <img src="/assets/icons/icon-delete.svg" alt="Delete Icon" />
-              </button>
             </div>
+            <div
+              class="font-semibold text-dark dark:text-lightGray focus:outline-none focus:border focus:border-primary border w-full rounded-md border-lightGray p-4"
+            >
+              <input
+                formControlName="qty"
+                type="number"
+                class="border-none outline-none w-full bg-transparent"
+                min="1"
+              />
+              <div
+                *ngIf="item.get('qty')?.invalid && item.get('qty')?.touched"
+                class="text-red text-xs"
+              >
+                {{ getErrorMessage("qty") }}
+              </div>
+            </div>
+            <div
+              class="font-semibold text-dark dark:text-lightGray border w-full rounded-md border-lightGray p-4"
+            >
+              <input
+                formControlName="price"
+                type="number"
+                class="border-none outline-none w-full bg-transparent"
+                min="0"
+              />
+              <div
+                *ngIf="item.get('price')?.invalid && item.get('price')?.touched"
+                class="text-red text-xs"
+              >
+                {{ getErrorMessage("price") }}
+              </div>
+            </div>
+            <div
+              class="font-semibold text-dark dark:text-lightGray focus:outline-none focus:border focus:border-primary border w-full rounded-md border-gray p-4"
+            >
+              {{
+                item.get("qty")?.value * item.get("price")?.value
+                  | number : "1.2-2"
+              }}
+            </div>
+            <button
+              type="button"
+              (click)="removeItem(i)"
+              class="font-semibold text-dark dark:text-lightGray p-4 w-full flex items-center justify-center"
+            >
+              <img src="/assets/icons/icon-delete.svg" alt="Delete Icon" />
+            </button>
           </div>
+
           <button
             (click)="addItem()"
             class="mt-6 w-full rounded-full bg-lightGray dark:bg-darkBlue text-base font-semibold text-gray dark:text-lightGray gap-2 p-4"
+            type="button"
           >
             Add New Item
           </button>
         </div>
       </div>
-    </div>
 
-    <!-- Submit and Cancel Buttons -->
-    <div class="flex items-center justify-between mt-14 px-14">
-      <button
-        class="p-3 px-6 bg-lightBg text-gray dark:bg-lightGray rounded-full font-semibold"
-        type="button"
-        (click)="closeForm()"
-      >
-        Discard
-      </button>
-      <div class="flex items-center space-x-4">
+      <!-- Submit and Cancel Buttons -->
+      <div class="flex items-center justify-between mt-14 px-14">
         <button
-          class="bg-darkBlue dark:bg-gray text-gray dark:text-lightGray py-3 px-6 rounded-full font-semibold"
-          type="submit"
+          class="p-3 px-6 bg-lightBg text-gray dark:bg-lightGray rounded-full font-semibold"
+          type="button"
+          (click)="invoiceForm.reset()"
         >
-          Save as Draft
+          Discard
         </button>
-        <button
-          class="bg-primary text-lightGray py-3 px-6 rounded-full font-semibold"
-          type="submit"
-        >
-          Save & Send
-        </button>
+        <div class="flex items-center space-x-4">
+          <button
+            class="bg-darkBlue dark:bg-gray text-gray dark:text-lightGray py-3 px-6 rounded-full font-semibold"
+            type="button"
+            (click)="saveAsDraft()"
+          >
+            Save as Draft
+          </button>
+          <button
+            class="bg-primary text-lightGray py-3 px-6 rounded-full font-semibold"
+            type="button"
+            (click)="saveAndSend()"
+          >
+            Save & Send
+          </button>
+        </div>
       </div>
     </div>
-  </form>
-</div>
+  </div>
+</form>
