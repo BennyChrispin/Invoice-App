@@ -68,9 +68,7 @@ export class InvoiceListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/invoice', invoiceId]);
   }
 
-  deleteInvoice(id: string) {
-    // Call to delete invoice...
-  }
+  deleteInvoice(id: string) {}
   openInvoiceForm() {
     this.isFormOpen = true;
   }

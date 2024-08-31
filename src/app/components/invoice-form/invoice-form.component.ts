@@ -104,7 +104,6 @@ export class InvoiceFormComponent implements OnInit {
   }
 
   saveAsDraft(): void {
-    // Implement save as draft logic
     console.log('Saving as draft:', this.invoiceForm.getRawValue());
   }
   saveAndSend(): void {
@@ -115,7 +114,7 @@ export class InvoiceFormComponent implements OnInit {
       };
       this.store.dispatch(InvoiceActions.addInvoice({ invoice: newInvoice }));
     }
-    // Implement save and send logic
+
     console.log('Saving and sending:', this.invoiceForm.getRawValue());
   }
 
