@@ -59,5 +59,12 @@ export const invoiceReducer = createReducer(
   on(InvoiceActions.deleteInvoiceFailure, (state, { error }) => ({
     ...state,
     error,
+  })),
+  on(InvoiceActions.updateInvoiceStatusSuccess, (state, { invoice }) => ({
+    ...state,
+    invoices: state.invoices.map((inv) =>
+      inv.id === invoice.id ? { ...inv, status: invoice.status } : inv
+    ),
+    error: null,
   }))
 );

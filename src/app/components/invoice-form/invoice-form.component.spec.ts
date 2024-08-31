@@ -8,9 +8,8 @@ describe('InvoiceFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InvoiceFormComponent]
-    })
-    .compileComponents();
+      declarations: [InvoiceFormComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(InvoiceFormComponent);
     component = fixture.componentInstance;

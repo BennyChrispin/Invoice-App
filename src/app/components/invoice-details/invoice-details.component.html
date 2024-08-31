@@ -61,6 +61,7 @@
           </button>
           <button
             *ngIf="invoice.status === 'Pending'"
+            (click)="markAsPaid()"
             class="p-3 px-6 rounded-full bg-primary text-lightBg font-bold font-spartan hover:bg-opacity-50 transition-all duration-300 ease-in-out"
           >
             Mark as Paid

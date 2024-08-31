@@ -43,6 +43,28 @@ export class InvoiceEffects {
     )
   );
 
+  updateInvoiceStatus$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(InvoiceActions.updateInvoiceStatus),
+      mergeMap((action) =>
+        this.invoiceService.updateStatus(action.id, action.status).pipe(
+          map((updatedInvoice: Invoice) =>
+            InvoiceActions.updateInvoiceStatusSuccess({
+              invoice: updatedInvoice,
+            })
+          ),
+          catchError((error) =>
+            of(
+              InvoiceActions.updateInvoiceStatusFailure({
+                error: error.message,
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
   deleteInvoice$ = createEffect(() =>
     this.actions$.pipe(
       ofType(InvoiceActions.deleteInvoice),
