@@ -1,4 +1,7 @@
-<div class="mt-28 mx-auto md:mt-14 max-w-screen-lg">
+<div
+  [ngClass]="{ 'invoice-list-blur': isFormOpen }"
+  class="mt-28 mx-auto md:mt-14 max-w-screen-lg"
+>
   <button
     class="flex items-center space-x-4 text-primary hover:text-secondary transition mx-6"
     (click)="goBack()"
@@ -49,6 +52,7 @@
       >
         <div class="flex items-center space-x-4">
           <button
+            (click)="openInvoiceForm()"
             class="p-3 px-6 rounded-full bg-lightGray dark:bg-[#252945] text-gray dark:text-lightBg font-bold font-spartan hover:bg-opacity-50 transition-all duration-300 ease-in-out"
           >
             Edit
@@ -244,6 +248,15 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Modal Container -->
+<div *ngIf="isFormOpen" class="invoice-form-container show">
+  <div class="invoice-form">
+    <app-edit-invoice-form
+      (closeForm)="closeInvoiceForm()"
+    ></app-edit-invoice-form>
   </div>
 </div>
 

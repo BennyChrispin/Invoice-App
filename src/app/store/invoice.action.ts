@@ -77,7 +77,6 @@ export const deleteInvoiceFailure = createAction(
   '[Invoice List] Delete Invoice Failure',
   props<{ error: any }>()
 );
-export function loadInvoice(arg0: { id: string; }): any {
+export function loadInvoice(arg0: { id: string }): any {
   throw new Error('Function not implemented.');
 }
-

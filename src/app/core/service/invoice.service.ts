@@ -52,4 +52,19 @@ export class InvoiceService {
     this.invoicesSubject.next(updatedInvoices);
     return of();
   }
+  updateInvoice(
+    id: string,
+    updatedData: Partial<Invoice>
+  ): Observable<Invoice> {
+    const currentInvoices = this.invoicesSubject.getValue();
+    const updatedInvoices = currentInvoices.map((invoice) =>
+      invoice.id === id ? { ...invoice, ...updatedData } : invoice
+    );
+    this.invoicesSubject.next(updatedInvoices);
+
+    const updatedInvoice = updatedInvoices.find(
+      (inv) => inv.id === id
+    ) as Invoice;
+    return of(updatedInvoice);
+  }
 }
