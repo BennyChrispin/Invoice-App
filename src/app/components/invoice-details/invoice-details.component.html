@@ -115,11 +115,8 @@
       </div>
     </div>
 
-    <!-- Responsive Layout for Invoice Data -->
     <div class="mx-6 md:mx-4">
-      <!-- Parent Container -->
       <div class="mt-10 grid grid-cols-2 md:grid-cols-3 gap-4">
-        <!-- Invoice Date -->
         <div class="space-y-2">
           <h1 class="font-light text-sm text-gray dark:text-lightGray">
             Invoice Date
@@ -128,7 +125,7 @@
             {{ invoice.createdAt | date : "d MMM y" }}
           </p>
         </div>
-        <!-- Bill To -->
+
         <div class="space-y-2">
           <h1 class="font-light text-sm text-gray dark:text-lightGray">
             Bill To
@@ -137,7 +134,7 @@
             {{ invoice.clientName }}
           </p>
         </div>
-        <!-- Sent to Mobile -->
+
         <div class="space-y-2 order-last md:order-none hidden md:block">
           <h1 class="font-light text-sm text-gray dark:text-lightGray">
             Sent to
@@ -183,9 +180,7 @@
       </div>
     </div>
 
-    <!-- Responsive Table -->
     <div class="mt-8 rounded-xl bg-[#F9FAFE] dark:bg-[#252945] mb-24 md:mb-0">
-      <!-- Header -->
       <div
         class="hidden md:grid md:grid-cols-4 px-6 py-4 text-sm font-normal text-gray tracking-wider pt-6"
       >
@@ -195,17 +190,15 @@
         <div>Total</div>
       </div>
 
-      <!-- Items -->
       <div
         *ngFor="let item of invoice.items"
         class="grid md:grid-cols-4 w-full py-0 md:py-4"
       >
-        <!-- Item Name -->
         <div
           class="px-6 text-sm font-semibold text-darkBlue dark:text-lightGray pt-6 md:pt-0"
         >
           {{ item.name }}
-          <!-- Mobile View -->
+
           <div class="md:hidden text-gray dark:text-lightGray">
             <div class="flex items-center justify-between">
               <div class="flex space-x-2">
@@ -219,21 +212,18 @@
           </div>
         </div>
 
-        <!-- Quantity (Visible on larger screens) -->
         <div
           class="hidden md:block px-6 text-sm text-gray font-semibold dark:text-lightGray"
         >
           {{ item.quantity }}
         </div>
 
-        <!-- Price (Visible on larger screens) -->
         <div
           class="hidden md:block px-6 text-sm text-gray font-semibold dark:text-lightGray"
         >
           {{ item.price | currency }}
         </div>
 
-        <!-- Total (Visible on larger screens) -->
         <div
           class="hidden md:block px-6 text-sm text-gray font-semibold dark:text-lightGray"
         >
@@ -241,7 +231,6 @@
         </div>
       </div>
 
-      <!-- Amount Due -->
       <div
         class="grid grid-cols-2 md:grid-cols-4 bg-darkBg text-lightGray mt-8 rounded-b-xl"
       >
@@ -257,3 +246,10 @@
     </div>
   </div>
 </div>
+
+<app-confirmation-modal
+  *ngIf="showDeleteModal"
+  [invoiceId]="invoice?.id || ''"
+  (confirm)="handleDeleteConfirmed()"
+  (cancel)="handleDeleteCancelled()"
+></app-confirmation-modal>

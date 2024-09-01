@@ -21,14 +21,14 @@
     <!-- Sender Address (Bill From) -->
     <div class="mt-14 px-4 md:px-12" formGroupName="senderAddress">
       <h2
-        class="font-spartan font-semibold text-sm text-primary dark:text-primary"
+        class="font-spartan font-semibold text-xs md:text-sm text-primary dark:text-primary"
       >
         Bill From
       </h2>
       <div class="flex-col items-center space-y-2 mt-4">
         <label
           for="streetAddress"
-          class="block text-base font-light text-gray font-spartan"
+          class="block font-light text-gray font-spartan text-xs md:text-base"
           >Street Address</label
         >
         <input
@@ -50,7 +50,7 @@
         <div class="flex-col items-center space-y-2 w-full">
           <label
             for="city"
-            class="block text-base font-light text-gray font-spartan"
+            class="block text-sm md:text-base font-light text-gray font-spartan"
             >City</label
           >
           <input
@@ -69,7 +69,8 @@
           </div>
         </div>
         <div class="flex-col items-center space-y-2 w-full">
-          <label class="block text-base font-light text-gray font-spartan"
+          <label
+            class="block text-sm md:text-base font-light text-gray font-spartan"
             >Post Code</label
           >
           <input
@@ -88,7 +89,8 @@
           </div>
         </div>
         <div class="flex-col items-center space-y-2 w-full">
-          <label class="block text-base font-light text-gray font-spartan"
+          <label
+            class="block text-sm md:text-base font-light text-gray font-spartan"
             >Country</label
           >
           <input
@@ -119,7 +121,8 @@
 
       <!-- Client's Name -->
       <div class="flex-col items-center space-y-2 mt-4">
-        <label class="block text-base font-light text-gray font-spartan"
+        <label
+          class="block text-sm md:text-base font-light text-gray font-spartan"
           >Client's Name</label
         >
         <input
@@ -140,7 +143,8 @@
 
       <!-- Client's Email -->
       <div class="flex-col items-center space-y-2 mt-4">
-        <label class="block text-base font-light text-gray font-spartan"
+        <label
+          class="block text-sm md:text-base font-light text-gray font-spartan"
           >Client's Email</label
         >
         <input
@@ -164,7 +168,8 @@
         class="flex-col items-center space-y-2 mt-4"
         formGroupName="clientAddress"
       >
-        <label class="block text-base font-light text-gray font-spartan"
+        <label
+          class="block text-sm md:text-base font-light text-gray font-spartan"
           >Street Address</label
         >
         <input
@@ -188,7 +193,8 @@
         formGroupName="clientAddress"
       >
         <div class="flex-col items-center space-y-2 w-full">
-          <label class="block text-base font-light text-gray font-spartan"
+          <label
+            class="block text-sm md:text-base font-light text-gray font-spartan"
             >City</label
           >
           <input
@@ -207,7 +213,8 @@
           </div>
         </div>
         <div class="flex-col items-center space-y-2 w-full">
-          <label class="block text-base font-light text-gray font-spartan"
+          <label
+            class="block text-sm md:text-base font-light text-gray font-spartan"
             >Post Code</label
           >
           <input
@@ -226,7 +233,8 @@
           </div>
         </div>
         <div class="flex-col items-center space-y-2 w-full">
-          <label class="block text-base font-light text-gray font-spartan"
+          <label
+            class="block text-sm md:text-base font-light text-gray font-spartan"
             >Country</label
           >
           <input
@@ -249,7 +257,8 @@
       <!-- Invoice Date and Payment Terms -->
       <div class="flex flex-row items-center justify-between mt-4 gap-6">
         <div class="flex-col items-center space-y-2 w-full">
-          <label class="block text-base font-light text-gray font-spartan"
+          <label
+            class="block text-sm md:text-base font-light text-gray font-spartan"
             >Invoice Date</label
           >
           <input
@@ -269,7 +278,8 @@
         </div>
 
         <div class="flex-col items-center space-y-2 w-full">
-          <label class="block text-base font-light text-gray font-spartan"
+          <label
+            class="block text-sm md:text-base font-light text-gray font-spartan"
             >Payment Terms</label
           >
 
@@ -308,7 +318,8 @@
 
       <!-- Project Description -->
       <div class="flex-col items-center space-y-2 mt-6">
-        <label class="block text-base font-light text-gray font-spartan"
+        <label
+          class="block text-sm md:text-base font-light text-gray font-spartan"
           >Project Description</label
         >
         <input
@@ -329,29 +340,29 @@
 
       <!-- Item List -->
       <div class="mt-8" formArrayName="items">
-        <h2 class="text-gray text-lg font-semibold">Item List</h2>
+        <h2 class="text-gray text-base md:text-lg font-semibold">Item List</h2>
         <div class="grid-container mt-4">
           <!-- Grid Header -->
           <div
             class="py-4 grid-header grid grid-cols-5 gap-4 pb-4 dark:border-darkGray text-sm font-semibold text-dark dark:text-lightGray"
           >
             <div
-              class="text-gray dark:text-lightGray focus:outline-none focus:border focus:border-primary font-light"
+              class="text-gray text-xs md:text-sm dark:text-lightGray focus:outline-none focus:border focus:border-primary font-light"
             >
               Item Name
             </div>
             <div
-              class="text-center dark:text-lightGray focus:outline-none focus:border focus:border-primary text-gray font-light"
+              class="text-center text-xs md:text-sm dark:text-lightGray focus:outline-none focus:border focus:border-primary text-gray font-light"
             >
               Qty.
             </div>
             <div
-              class="text-center dark:text-lightGray focus:outline-none focus:border focus:border-primary text-gray font-light"
+              class="text-center text-xs md:text-sm dark:text-lightGray focus:outline-none focus:border focus:border-primary text-gray font-light"
             >
               Price
             </div>
             <div
-              class="text-center dark:text-lightGray focus:outline-none focus:border focus:border-primary text-gray font-light"
+              class="text-center text-xs md:text-sm dark:text-lightGray focus:outline-none focus:border focus:border-primary text-gray font-light"
             >
               Total
             </div>
@@ -438,7 +449,7 @@
 
           <button
             (click)="addItem()"
-            class="mt-6 w-full rounded-full bg-lightGray dark:bg-darkBlue text-base font-semibold text-gray dark:text-lightGray gap-2 p-4 hover:bg-opacity-50 dark:hover:bg-opacity-50 duration-300 transition-all ease-out"
+            class="mt-6 w-full text-sm md:text-base rounded-full bg-lightGray dark:bg-darkBlue font-semibold text-gray dark:text-lightGray gap-2 p-4 hover:bg-opacity-50 dark:hover:bg-opacity-50 duration-300 transition-all ease-out"
             type="button"
           >
             Add New Item
@@ -449,7 +460,7 @@
       <!-- Submit and Cancel Buttons -->
       <div class="flex items-center justify-between mt-14">
         <button
-          class="p-3 px-6 bg-lightBg text-gray dark:bg-lightGray rounded-full font-semibold"
+          class="p-3 px-6 text-sm md:text-base bg-lightBg text-gray dark:bg-lightGray rounded-full font-semibold"
           type="button"
           (click)="invoiceForm.reset()"
         >
@@ -457,14 +468,14 @@
         </button>
         <div class="flex items-center space-x-4">
           <button
-            class="bg-darkBlue dark:bg-gray text-gray dark:text-lightGray py-3 px-6 rounded-full font-semibold"
+            class="bg-darkBlue text-sm md:text-base dark:bg-gray text-gray dark:text-lightGray py-3 px-6 rounded-full font-semibold"
             type="button"
             (click)="saveAsDraft()"
           >
             Save as Draft
           </button>
           <button
-            class="bg-primary text-lightGray py-3 px-6 rounded-full font-semibold"
+            class="bg-primary text-sm md:text-base text-lightGray py-3 px-6 rounded-full font-semibold"
             type="button"
             (click)="saveAndSend()"
           >

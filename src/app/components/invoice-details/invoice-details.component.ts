@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class InvoiceDetailsComponent implements OnInit, OnDestroy {
   invoice!: Invoice | null;
+  showDeleteModal = false;
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -32,7 +33,6 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
       .subscribe((invoice) => {
         this.invoice = invoice;
         if (!invoice) {
-          // Dispatch action to load a single invoice if not found in state
           this.store.dispatch(InvoiceActions.loadInvoice({ id }));
         }
       });
@@ -50,9 +50,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
   }
 
   deleteInvoice(id: string): void {
-    if (confirm('Are you sure you want to delete this invoice?')) {
-      this.store.dispatch(InvoiceActions.deleteInvoice({ id }));
-    }
+    this.showDeleteModal = true;
   }
 
   goBack(): void {
@@ -61,5 +59,18 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  handleDeleteConfirmed(): void {
+    if (this.invoice) {
+      this.store.dispatch(
+        InvoiceActions.deleteInvoice({ id: this.invoice.id })
+      );
+    }
+    this.showDeleteModal = false;
+  }
+
+  handleDeleteCancelled(): void {
+    this.showDeleteModal = false;
   }
 }

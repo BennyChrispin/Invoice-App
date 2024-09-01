@@ -10,7 +10,7 @@ import { EditInvoiceFormComponent } from './components/edit-invoice-form/edit-in
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { SharedModule } from './shared/components/header/shared.module';
+import { SharedModule } from './shared/components/header/shared.module'; // Correct the import path here
 import { FilterDropdownComponent } from './components/filter-dropdown/filter-dropdown.component';
 import { FormsModule } from '@angular/forms';
 import { invoiceReducer } from './store/invoice.reducer';
