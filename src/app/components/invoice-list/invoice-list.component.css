@@ -21,10 +21,14 @@
 @media (max-width: 768px) {
   .invoice-form-container {
     padding-left: 0;
+    margin-left: 0;
+    margin-top: 80px;
+    padding-bottom: 200px;
   }
 
   .invoice-form {
     width: 100%;
+    margin-left: 0;
   }
 }
 

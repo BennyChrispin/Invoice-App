@@ -97,7 +97,7 @@ export class InvoiceFormComponent implements OnInit {
   generateInvoiceId(): string {
     const prefix = 'RT';
     const uuidPart = uuidv4().split('-')[0];
-    const shortenedUuidPart = uuidPart.substring(0, 4);
+    const shortenedUuidPart = uuidPart.substring(0, 3);
 
     return `${prefix}-${shortenedUuidPart}`;
   }
