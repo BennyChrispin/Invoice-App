@@ -1,5 +1,5 @@
 <div class="fixed inset-0 flex items-center justify-center z-50">
-  <div class="bg-black bg-opacity-55 absolute inset-0"></div>
+  <div class="bg-black bg-opacity-55 dark:bg-opacity-65 absolute inset-0"></div>
   <div
     class="bg-white dark:bg-darkBlue rounded-xl p-8 z-10 max-w-sm mx-auto shadow-lg"
   >
@@ -14,13 +14,13 @@
     </p>
     <div class="mt-6 flex justify-end space-x-4">
       <button
-        class="px-4 py-2 rounded-full font-spartan bg-lightGray dark:bg-darkBlue text-gray dark:text-lightBg text-sm md:text-base font-medium hover:bg-opacity-55 duration-300 transition-all"
+        class="px-4 py-2 rounded-full font-spartan bg-lightGray dark:bg-darkBg text-gray dark:text-lightBg text-sm md:text-base font-medium hover:bg-opacity-55 duration-300 transition-all ease-in"
         (click)="onCancel()"
       >
         Cancel
       </button>
       <button
-        class="px-4 py-2 rounded-full font-spartan bg-red text-white text-sm md:text-base font-semibold hover:bg-opacity-55 duration-300 transition-all"
+        class="px-4 py-2 rounded-full font-spartan bg-red text-white text-sm md:text-base font-semibold hover:bg-opacity-55 duration-300 transition-all ease-in"
         (click)="onConfirm()"
       >
         Delete
