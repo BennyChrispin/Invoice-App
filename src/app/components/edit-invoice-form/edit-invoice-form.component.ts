@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { InvoiceService } from '../../core/service/invoice.service';
@@ -23,11 +23,19 @@ export class EditInvoiceFormComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store<AppState>,
     private route: ActivatedRoute,
+    private router: Router,
     private invoiceService: InvoiceService
   ) {}
 
   ngOnInit(): void {
-    console.log('Initializing form...');
+    this.initializeForm();
+    this.route.paramMap.subscribe((params) => {
+      this.invoiceId = params.get('id')!;
+      this.loadInvoiceData(this.invoiceId);
+    });
+  }
+
+  initializeForm(): void {
     this.invoiceForm = this.fb.group({
       clientName: ['', Validators.required],
       clientEmail: ['', [Validators.required, Validators.email]],
@@ -48,59 +56,45 @@ export class EditInvoiceFormComponent implements OnInit {
       description: ['', Validators.required],
       items: this.fb.array([this.createItem()]),
     });
-
-    console.log('Form initialized:', this.invoiceForm);
-
-    this.route.paramMap.subscribe((params) => {
-      this.invoiceId = params.get('id')!;
-      this.loadInvoiceData(this.invoiceId);
-    });
   }
 
   loadInvoiceData(invoiceId: string): void {
-    if (this.invoiceForm) {
-      this.invoiceService.getInvoices().subscribe((invoices) => {
-        const invoice = invoices.find((inv) => inv.id === invoiceId);
-        if (invoice) {
-          this.populateForm(invoice);
-        }
-      });
-    } else {
-      console.error('Form is not initialized');
-    }
+    this.invoiceService.getInvoices().subscribe((invoices) => {
+      const invoice = invoices.find((inv) => inv.id === invoiceId);
+      if (invoice) {
+        this.populateForm(invoice);
+      } else {
+        console.error('Invoice not found');
+      }
+    });
   }
 
   populateForm(invoice: Invoice): void {
-    if (this.invoiceForm) {
-      this.invoiceForm.patchValue({
-        clientName: invoice.clientName,
-        clientEmail: invoice.clientEmail,
-        clientAddress: {
-          streetAddress: invoice.clientAddress.street,
-          city: invoice.clientAddress.city,
-          postCode: invoice.clientAddress.postCode,
-          country: invoice.clientAddress.country,
-        },
-        senderAddress: {
-          streetAddress: invoice.senderAddress.street,
-          city: invoice.senderAddress.city,
-          postCode: invoice.senderAddress.postCode,
-          country: invoice.senderAddress.country,
-        },
-        paymentDue: invoice.paymentDue,
-        paymentTerms: invoice.paymentTerms,
-        description: invoice.description,
-      });
+    this.invoiceForm.patchValue({
+      clientName: invoice.clientName,
+      clientEmail: invoice.clientEmail,
+      clientAddress: {
+        streetAddress: invoice.clientAddress.street,
+        city: invoice.clientAddress.city,
+        postCode: invoice.clientAddress.postCode,
+        country: invoice.clientAddress.country,
+      },
+      senderAddress: {
+        streetAddress: invoice.senderAddress.street,
+        city: invoice.senderAddress.city,
+        postCode: invoice.senderAddress.postCode,
+        country: invoice.senderAddress.country,
+      },
+      paymentDue: invoice.paymentDue,
+      paymentTerms: invoice.paymentTerms,
+      description: invoice.description,
+    });
 
-      // Patch the form array items
-      const itemsFormArray = this.invoiceForm.get('items') as FormArray;
-      itemsFormArray.clear();
-      invoice.items.forEach((item) =>
-        itemsFormArray.push(this.createItemWithValues(item))
-      );
-    } else {
-      console.error('Form is not initialized');
-    }
+    const itemsFormArray = this.invoiceForm.get('items') as FormArray;
+    itemsFormArray.clear();
+    invoice.items.forEach((item) =>
+      itemsFormArray.push(this.createItemWithValues(item))
+    );
   }
 
   createItem(): FormGroup {
@@ -151,13 +145,13 @@ export class EditInvoiceFormComponent implements OnInit {
 
   getErrorMessage(controlName: string): string {
     const control = this.invoiceForm.get(controlName);
-    if (control && control.hasError('required')) {
+    if (control?.hasError('required')) {
       return 'This field is required';
     }
-    if (control && control.hasError('email')) {
+    if (control?.hasError('email')) {
       return 'Please enter a valid email address';
     }
-    if (control && control.hasError('min')) {
+    if (control?.hasError('min')) {
       return `Minimum value is ${control.errors?.['min'].min}`;
     }
     return '';
@@ -172,7 +166,8 @@ export class EditInvoiceFormComponent implements OnInit {
       this.invoiceService
         .updateInvoice(this.invoiceId, this.invoiceForm.value)
         .subscribe(() => {
-          // Navigate back or show a success message
+          this.router.navigate(['/invoice']);
+          this.closeForm.emit();
         });
     }
   }

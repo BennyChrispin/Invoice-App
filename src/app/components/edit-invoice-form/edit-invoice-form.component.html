@@ -459,14 +459,15 @@
 
       <!-- Submit and Cancel Buttons -->
       <div class="flex items-center justify-between mt-14 mb-6">
-        <button
+        <!-- <button
           class="p-3 px-6 text-sm md:text-base bg-lightBg text-gray dark:bg-lightGray rounded-full font-semibold"
           type="button"
         >
           Cancel
-        </button>
+        </button> -->
         <div class="flex items-center space-x-4">
           <button
+            (click)="onSubmit()"
             class="bg-primary text-sm md:text-base text-lightGray py-3 px-6 rounded-full font-semibold"
             type="button"
           >
