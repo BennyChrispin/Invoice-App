@@ -3,7 +3,7 @@
   class="invoice-form-container mt-32 md:mt-28 lg:mt-auto"
 >
   <div
-    class="invoice-form bg-[#FFF] dark:bg-darkBg p-6 rounded-r-2xl shadow-lg font-spartan relative"
+    class="invoice-form bg-[#FFF] dark:bg-darkBg p-6 rounded-r-2xl shadow-lg font-spartan relative pt-10"
   >
     <!-- Close Button -->
     <button
@@ -16,7 +16,7 @@
     <h2
       class="text-xl font-bold dark:text-lightGray text-dark font-spartan px-4 md:px-12"
     >
-      New Invoice
+      Edit <span class="font-semibold text-gray">#</span>{{ invoiceId }}
     </h2>
     <!-- Sender Address (Bill From) -->
     <div class="mt-14 px-4 md:px-12" formGroupName="senderAddress">
