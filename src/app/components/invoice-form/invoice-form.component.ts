@@ -122,7 +122,7 @@ export class InvoiceFormComponent implements OnInit {
         createdAt: new Date(),
       };
       this.store.dispatch(InvoiceActions.addInvoice({ invoice: newInvoice }));
-      console.log('Saving and sending:', newInvoice);
+      // console.log('Saving and sending:', newInvoice);
       this.invoiceForm.reset();
     } else {
       this.invoiceForm.markAllAsTouched();

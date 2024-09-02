@@ -1,70 +1,42 @@
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
+
+import { Invoice } from '../core/models/invoice.model';
 import * as InvoiceActions from './invoice.action';
 
-export interface InvoiceState {
-  invoices: any[];
+export interface InvoiceState extends EntityState<Invoice> {
   error: any;
 }
 
-export const initialState: InvoiceState = {
-  invoices: [],
-  error: null,
-};
+export const adapter: EntityAdapter<Invoice> = createEntityAdapter<Invoice>();
 
-export interface Error {
-  message: string;
-  code?: number;
-}
+export const initialState: InvoiceState = adapter.getInitialState({
+  error: null,
+});
 
 export const invoiceReducer = createReducer(
   initialState,
-  on(InvoiceActions.loadInvoicesSuccess, (state, { invoices }) => ({
-    ...state,
-    invoices,
-    error: null,
-  })),
-  on(InvoiceActions.loadInvoicesFailure, (state, { error }) => ({
-    ...state,
-    error,
-  })),
-  on(InvoiceActions.addInvoiceSuccess, (state, { invoice }) => ({
-    ...state,
-    invoices: [...state.invoices, invoice],
-    error: null,
-  })),
-  on(InvoiceActions.addInvoiceFailure, (state, { error }) => ({
-    ...state,
-    error,
-  })),
-  on(InvoiceActions.updateInvoiceSuccess, (state, { invoice }) => ({
-    ...state,
-    invoices: state.invoices.map((i) => (i.id === invoice.id ? invoice : i)),
-    error: null,
-  })),
-  on(InvoiceActions.updateInvoiceFailure, (state, { error }) => ({
-    ...state,
-    error,
-  })),
-  on(InvoiceActions.deleteInvoiceSuccess, (state, { id }) => ({
-    ...state,
-    invoices: state.invoices.filter((i) => i.id !== id),
-    error: null,
-  })),
-
-  on(InvoiceActions.deleteInvoice, (state, { id }) => ({
-    ...state,
-    invoices: state.invoices.filter((invoice) => invoice.id !== id),
-  })),
-
-  on(InvoiceActions.deleteInvoiceFailure, (state, { error }) => ({
-    ...state,
-    error,
-  })),
-  on(InvoiceActions.updateInvoiceStatusSuccess, (state, { invoice }) => ({
-    ...state,
-    invoices: state.invoices.map((inv) =>
-      inv.id === invoice.id ? { ...inv, status: invoice.status } : inv
-    ),
-    error: null,
-  }))
+  on(InvoiceActions.loadInvoicesSuccess, (state, { invoices }) =>
+    adapter.setAll(invoices, { ...state, error: null })
+  ),
+  on(InvoiceActions.addInvoiceSuccess, (state, { invoice }) =>
+    adapter.addOne(invoice, { ...state, error: null })
+  ),
+  on(InvoiceActions.updateInvoiceSuccess, (state, { invoice }) =>
+    adapter.updateOne(
+      { id: invoice.id, changes: invoice },
+      { ...state, error: null }
+    )
+  ),
+  on(InvoiceActions.deleteInvoiceSuccess, (state, { id }) =>
+    adapter.removeOne(id, { ...state, error: null })
+  ),
+  on(
+    InvoiceActions.loadInvoicesFailure,
+    InvoiceActions.addInvoiceFailure,
+    (state, { error }) => ({
+      ...state,
+      error,
+    })
+  )
 );
